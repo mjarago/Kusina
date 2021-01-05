@@ -7,7 +7,7 @@
         android:title="@string/recipes_fragment" />
     <item
         android:id="@+id/favoriteRecipesFragment"
-        android:icon="@drawable/ic_favorite"
+        android:icon="@drawable/ic_star"
         android:title="@string/favorite_recipes_fragment" />
     <item
         android:id="@+id/foodJokeFragment"
