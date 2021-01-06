@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="com.markarago.kusina.RecipesFragment"
+        android:name="com.markarago.kusina.ui.fragments.recipes.RecipesFragment"
         android:label="@string/recipes_fragment"
         tools:layout="@layout/fragment_recipes" />
     <fragment
         android:id="@+id/favoriteRecipesFragment"
-        android:name="com.markarago.kusina.FavoriteRecipesFragment"
+        android:name="com.markarago.kusina.ui.fragments.favorites.FavoriteRecipesFragment"
         android:label="@string/favorite_recipes_fragment"
         tools:layout="@layout/fragment_favorite_recipes" />
     <fragment
         android:id="@+id/foodJokeFragment"
-        android:name="com.markarago.kusina.FoodJokeFragment"
+        android:name="com.markarago.kusina.ui.fragments.foodjoke.FoodJokeFragment"
         android:label="@string/food_joke_fragment"
         tools:layout="@layout/fragment_food_joke" />
 </navigation>

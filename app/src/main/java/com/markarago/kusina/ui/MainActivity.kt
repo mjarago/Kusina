@@ -1,4 +1,4 @@
-package com.markarago.kusina
+package com.markarago.kusina.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.markarago.kusina.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

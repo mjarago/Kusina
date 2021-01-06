@@ -1,10 +1,11 @@
-package com.markarago.kusina
+package com.markarago.kusina.ui.fragments.favorites
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.markarago.kusina.R
 
 class FavoriteRecipesFragment : Fragment() {
 
