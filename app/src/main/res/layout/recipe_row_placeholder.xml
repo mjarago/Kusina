@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp">
+
+
+    <View
+        android:id="@+id/image_placeholder"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/title_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_placeholder"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/description_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="@+id/title_placeholder"
+        app:layout_constraintStart_toStartOf="@+id/title_placeholder"
+        app:layout_constraintTop_toBottomOf="@+id/title_placeholder" />
+
+    <View
+        android:id="@+id/icon_placeholder_1"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/description_placeholder"
+        app:layout_constraintTop_toBottomOf="@+id/description_placeholder"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/icon_placeholder_2"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toEndOf="@+id/icon_placeholder_1"
+        app:layout_constraintTop_toTopOf="@+id/icon_placeholder_1" />
+
+    <View
+        android:id="@+id/icon_placeholder_3"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toEndOf="@+id/icon_placeholder_2"
+        app:layout_constraintTop_toTopOf="@+id/icon_placeholder_2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
