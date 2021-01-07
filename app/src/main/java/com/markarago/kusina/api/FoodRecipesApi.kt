@@ -9,7 +9,6 @@ import retrofit2.http.QueryMap
 interface FoodRecipesApi {
 
     companion object {
-        const val API_KEY = BuildConfig.SPOONACULAR_API_KEY
         const val BASE_URL = "https://api.spoonacular.com"
     }
 

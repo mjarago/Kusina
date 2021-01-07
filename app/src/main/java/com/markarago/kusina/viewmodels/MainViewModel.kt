@@ -1,4 +1,4 @@
-package com.markarago.kusina
+package com.markarago.kusina.viewmodels
 
 
 import android.app.Application
@@ -16,6 +16,8 @@ import com.markarago.kusina.util.NetworkResult
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
+
+
 
 class MainViewModel @ViewModelInject constructor(
     private val repository: Repository,
