@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.text.Html" />
 
         <variable
             name="result"
@@ -75,7 +76,7 @@
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:text="@{result.summary}"
+                    android:text="@{Html.fromHtml(result.summary)}"
                     tools:text="@string/lorem_ipsum_long"
                     app:layout_constraintEnd_toEndOf="@+id/recipe_title_text_view"
                     app:layout_constraintStart_toStartOf="@+id/recipe_title_text_view"

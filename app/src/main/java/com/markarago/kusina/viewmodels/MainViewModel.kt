@@ -6,13 +6,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.markarago.kusina.data.Repository
+import com.markarago.kusina.data.database.RecipesEntity
 import com.markarago.kusina.models.FoodRecipe
 import com.markarago.kusina.util.Constants
 import com.markarago.kusina.util.NetworkResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
@@ -25,19 +25,54 @@ class MainViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
 
 
+    /** ROOM DATABASE **/
+
+    val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
+
+    /**
+     * @param recipesEntity
+     */
+    private fun insertRecipes(recipesEntity: RecipesEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertRecipes(recipesEntity)
+        }
+
+    private fun offlineCacheRecipes(foodRecipe: FoodRecipe) {
+        val recipesEntity = RecipesEntity(foodRecipe)
+        insertRecipes(recipesEntity)
+    }
+
+
+    /**
+     * RETROFIT
+     */
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
-    // coroutine
+    /**
+     * @param queries - Set of queries required and/or additional parameters for the get request
+     * @see getRecipesSafeCall
+     */
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queries)
     }
 
+    /**
+     * @
+     * @param queries - Set of queries required and/or additional parameters for the get request
+     */
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         if(hasInternetConnection()) {
             // make get request
             try {
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesResponse(response)
+
+                // cache data
+                val foodRecipe = recipesResponse.value!!.data
+                if (foodRecipe != null) {
+                    offlineCacheRecipes(foodRecipe)
+                }
+
             } catch (e: Exception) {
                 recipesResponse.value = NetworkResult.Error(Constants.RECIPES_NOT_FOUND)
             }
