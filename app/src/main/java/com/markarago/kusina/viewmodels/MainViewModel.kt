@@ -43,9 +43,7 @@ class MainViewModel @ViewModelInject constructor(
     }
 
 
-    /**
-     * RETROFIT
-     */
+    /** RETROFIT **/
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
     /**

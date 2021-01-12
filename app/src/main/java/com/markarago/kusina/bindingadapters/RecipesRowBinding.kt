@@ -1,6 +1,5 @@
 package com.markarago.kusina.bindingadapters
 
-import android.graphics.Color.green
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.markarago.kusina.R
-import org.w3c.dom.Text
 
 class RecipesRowBinding {
 
@@ -19,19 +17,14 @@ class RecipesRowBinding {
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String) {
             imageView.load(imageUrl) {
                 crossfade(600)
+                error(R.drawable.ic_error_placeholder)
             }
         }
 
-        @BindingAdapter("setNumberOfLikes")
+        @BindingAdapter("setNumberToTextViewString")
         @JvmStatic
-        fun setNumberOfLikes(textView: TextView, likes: Int) {
-            textView.text = likes.toString()
-        }
-
-        @BindingAdapter("setNumberOfMinutes")
-        @JvmStatic
-        fun setNumberOfMinutes(textView: TextView, minutes: Int) {
-            textView.text = minutes.toString()
+        fun setNumberToTextViewString(textView: TextView, num: Int) {
+            textView.text = num.toString()
         }
 
 
