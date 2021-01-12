@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.*
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.markarago.kusina.viewmodels.MainViewModel
 import com.markarago.kusina.adapters.RecipesAdapter
 import com.markarago.kusina.databinding.FragmentRecipesBinding
+import com.markarago.kusina.R
 import com.markarago.kusina.util.NetworkResult
 import com.markarago.kusina.util.observeOnce
 import com.markarago.kusina.viewmodels.RecipesViewModel
@@ -47,6 +49,11 @@ class RecipesFragment : Fragment() {
 
         setupRecyclerView()
         readDatabase()
+
+        binding.recipesFab.setOnClickListener {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+        }
+
 
         return binding.root
     }
@@ -101,7 +108,7 @@ class RecipesFragment : Fragment() {
     private fun loadDataFromCache() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observe(viewLifecycleOwner) { database ->
-                if(database.isNotEmpty()) {
+                if (database.isNotEmpty()) {
                     mAdapter.setData(database[0].foodRecipe)
                 }
             }
