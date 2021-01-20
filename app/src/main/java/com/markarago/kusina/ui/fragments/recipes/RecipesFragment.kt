@@ -15,12 +15,17 @@ import com.markarago.kusina.viewmodels.MainViewModel
 import com.markarago.kusina.adapters.RecipesAdapter
 import com.markarago.kusina.databinding.FragmentRecipesBinding
 import com.markarago.kusina.R
+import com.markarago.kusina.util.NetworkListener
 import com.markarago.kusina.util.NetworkResult
 import com.markarago.kusina.util.observeOnce
 import com.markarago.kusina.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
@@ -32,6 +37,8 @@ class RecipesFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private val mAdapter by lazy { RecipesAdapter() }
+
+    private lateinit var networkListener: NetworkListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +57,29 @@ class RecipesFragment : Fragment() {
         binding.mainViewModel = mainViewModel
 
         setupRecyclerView()
-        readDatabase()
+
+        recipesViewModel.readBackOnline.observe(viewLifecycleOwner, {
+            recipesViewModel.backOnline = it
+        })
+
+        networkListener = NetworkListener()
+
+        lifecycleScope.launch {
+            networkListener.checkNetworkAvailablity(requireContext())
+                .collect() { status ->
+                    Log.d("NetworkListener", "onCreateView: Network Status: $status")
+                    recipesViewModel.networkStatus = status
+                    recipesViewModel.showNetworkStatus()
+                    readDatabase()
+                }
+        }
 
         binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            if (recipesViewModel.networkStatus) {
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            } else {
+                recipesViewModel.showNetworkStatus()
+            }
         }
 
 

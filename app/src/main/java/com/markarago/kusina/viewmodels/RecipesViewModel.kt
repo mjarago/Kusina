@@ -1,14 +1,18 @@
 package com.markarago.kusina.viewmodels
 
 import android.app.Application
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.markarago.kusina.data.DataStoreRepository
 import com.markarago.kusina.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.markarago.kusina.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.markarago.kusina.util.Constants.Companion.DEFAULT_RECIPES_COUNT
+import com.markarago.kusina.util.Constants.Companion.INTERNET_CONNECTION_RESTORED
+import com.markarago.kusina.util.Constants.Companion.NO_INTERNET_CONNECTION
 import com.markarago.kusina.util.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
 import com.markarago.kusina.util.Constants.Companion.QUERY_API_KEY
 import com.markarago.kusina.util.Constants.Companion.QUERY_DIET
@@ -28,7 +32,17 @@ class RecipesViewModel @ViewModelInject constructor(
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
 
+    var networkStatus = false
+    var backOnline = false
+
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
+
+    fun saveBackOnline(backOnline: Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveBackOnline(backOnline)
+        }
+
 
     fun saveMealAndDietType(mealType: String, mealTypeId: Int, dietType: String, dietTypeId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -54,6 +68,18 @@ class RecipesViewModel @ViewModelInject constructor(
         queries[QUERY_FILL_INGREDIENTS] = "true"
 
         return queries
+    }
+
+    fun showNetworkStatus() {
+        if(!networkStatus) {
+            Toast.makeText(getApplication(), NO_INTERNET_CONNECTION, Toast.LENGTH_SHORT).show()
+            saveBackOnline(true)
+        } else if(networkStatus) {
+            if(backOnline) {
+                Toast.makeText(getApplication(), INTERNET_CONNECTION_RESTORED, Toast.LENGTH_SHORT).show()
+                saveBackOnline(false)
+            }
+        }
     }
 
 }

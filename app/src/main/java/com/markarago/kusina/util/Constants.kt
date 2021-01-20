@@ -6,6 +6,7 @@ class Constants {
     companion object {
         const val API_LIMITED = "API Key Limited."
         const val NO_INTERNET_CONNECTION = "No Internet Connection"
+        const val INTERNET_CONNECTION_RESTORED = "We're back online"
         const val NETWORK_TIMEOUT = "Network Timeout."
         const val RECIPES_NOT_FOUND = "Recipes not found."
         const val SPOONACULAR_API_KEY = Spoonacular.API_KEY
@@ -31,6 +32,7 @@ class Constants {
         const val PREFERENCES_MEAL_TYPE_ID = "mealTypeId"
         const val PREFERENCES_DIET_TYPE = "dietType"
         const val PREFERENCES_DIET_TYPE_ID = "dietTypeId"
+        const val PREFERENCES_BACK_ONLINE = "backOnline"
 
     }
 }
