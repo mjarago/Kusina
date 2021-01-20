@@ -11,6 +11,7 @@ class Constants {
         const val RECIPES_NOT_FOUND = "Recipes not found."
         const val SPOONACULAR_API_KEY = Spoonacular.API_KEY
         // API Query Keys
+        const val QUERY_SEARCH = "query"
         const val QUERY_NUMBER = "number"
         const val QUERY_API_KEY = "apiKey"
         const val QUERY_TYPE = "type"

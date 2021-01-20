@@ -18,6 +18,7 @@ import com.markarago.kusina.util.Constants.Companion.QUERY_API_KEY
 import com.markarago.kusina.util.Constants.Companion.QUERY_DIET
 import com.markarago.kusina.util.Constants.Companion.QUERY_FILL_INGREDIENTS
 import com.markarago.kusina.util.Constants.Companion.QUERY_NUMBER
+import com.markarago.kusina.util.Constants.Companion.QUERY_SEARCH
 import com.markarago.kusina.util.Constants.Companion.QUERY_TYPE
 import com.markarago.kusina.util.Constants.Companion.SPOONACULAR_API_KEY
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +68,17 @@ class RecipesViewModel @ViewModelInject constructor(
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
 
+        return queries
+    }
+    
+    fun applySearchQuery(searchQuery: String): HashMap<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+        queries[QUERY_SEARCH] = searchQuery
+        queries[QUERY_API_KEY] = SPOONACULAR_API_KEY
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_COUNT // number of recipes (1 - 100)
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
+        
         return queries
     }
 

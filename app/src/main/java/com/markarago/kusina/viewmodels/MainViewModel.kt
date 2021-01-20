@@ -45,6 +45,17 @@ class MainViewModel @ViewModelInject constructor(
 
     /** RETROFIT **/
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    var searchedRecipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+
+
+    /**
+     * @param searchQueries - Set of queries required and/or additional parameters for the get request
+     * @see searchRecipesSafeCall
+     */
+    fun searchRecipes(searchQueries: Map<String, String>) = viewModelScope.launch {
+        searchRecipesSafeCall(searchQueries)
+    }
+
 
     /**
      * @param queries - Set of queries required and/or additional parameters for the get request
@@ -55,7 +66,7 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     /**
-     * @
+     *
      * @param queries - Set of queries required and/or additional parameters for the get request
      */
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
@@ -78,6 +89,23 @@ class MainViewModel @ViewModelInject constructor(
             recipesResponse.value = NetworkResult.Error(Constants.NO_INTERNET_CONNECTION)
         }
     }
+
+
+    private suspend fun searchRecipesSafeCall(searchQueries: Map<String, String>) {
+        if(hasInternetConnection()) {
+            // make get request
+            try {
+                val response = repository.remote.searchRecipes(searchQueries)
+                searchedRecipesResponse.value = handleFoodRecipesResponse(response)
+
+            } catch (e: Exception) {
+                searchedRecipesResponse.value = NetworkResult.Error(Constants.RECIPES_NOT_FOUND)
+            }
+        } else {
+            searchedRecipesResponse.value = NetworkResult.Error(Constants.NO_INTERNET_CONNECTION)
+        }
+    }
+
 
     private fun handleFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe>? {
         when {
